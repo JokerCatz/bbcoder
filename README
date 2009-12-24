@@ -1,1 +1,34 @@
-init
+this Source fork with BBCodeizer(MIT)
+
+easy to use & care Performance
+
+Only
+
+BBCoder.enbbcode(string)
+BBCoder.debbcode(string)
+
+It's all
+
+maybe you like use this:
+
+[model(save/update)]
+def before_save
+  self.body = BBCoder.decode(ERB::Util.html_escape(self.body)) if self.body_changed?
+end
+
+[controller(update edit)]
+def edit
+  @post.body = BBCoder.encode(@post.body) # for WYSIWYG
+end
+
+so , when display will not take any process to de/encode BBCode again :)
+
+& also support Helper
+
+[view]
+
+<%= bbcoder_encode(string) %>
+<%= bbcoder_decode(string) %>
+
+& if you using TinyMCE BBCode plugin , you can use %LIB_DIR%/support/TinyMCE/BBCode
+to change original plugin
