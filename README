@@ -27,7 +27,10 @@ then add the title in column name with new/edit form
 >> x.body #=> "<span style=\"color: #ff0000\">werwer</span>"
 
 
-okay , have fun :P
 
+& if you using TinyMCE BBCode plugin , you can use %LIB_DIR%/support/TinyMCE/BBCode
+to change original plugin to make sure TinyMCE to support all tags & some fix
+
+okay , have fun :P
 
 JokerCatz @ http://railsfun.tw/
