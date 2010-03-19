@@ -1,4 +1,30 @@
 module BBCoder
+  def self.included(base)
+    base.extend(ClassMethods)
+  end
+  module ClassMethods
+    def bbcoder(options = {})
+      eval_class_methods = ""
+      options[:title] ||= "bbcoder"
+      options[:column] = [options[:column]] unless options[:column].is_a?(Array)
+      options[:column].each do |column_name|
+        eval_class_methods += (
+          <<-EOV
+            def #{options[:title]}_#{column_name}
+              return BBCoder.encode(self.body)
+            end
+            def #{options[:title]}_#{column_name}=(text)
+              self.#{column_name} = BBCoder.decode(ERB::Util.html_escape(text))
+            end
+          EOV
+        ) if column_name
+      end
+      puts eval_class_methods
+
+      class_eval eval_class_methods
+    end
+  end
+
   class << self
     #:nodoc:
     Tags = {

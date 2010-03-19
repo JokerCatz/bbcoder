@@ -1,34 +1,33 @@
 this Source fork with BBCodeizer(MIT)
 
-easy to use & care Performance
+easy to use & care Performance , only save or update to process convert bbcode
+Just add to Model like
 
-Only
-
-BBCoder.enbbcode(string)
-BBCoder.debbcode(string)
-
-It's all
-
-maybe you like use this:
-
-[model(save/update)]
-def before_save
-  self.body = BBCoder.decode(ERB::Util.html_escape(self.body)) if self.body_changed?
+=======Model======
+class Post < ActiveRecord::Base
+  bbcoder :column => "body" , :title => "bb"
 end
+==================
 
-[controller(update edit)]
-def edit
-  @post.body = BBCoder.encode(@post.body) # for WYSIWYG
-end
+:column can be Array or String , set column you need BBCode
+:title is addon method name , default is "bb"
 
-so , when display will not take any process to de/encode BBCode again :)
+then add the title in column name with new/edit form
 
-& also support Helper
+=======View=======
+  <%= f.text_area :bb_body , :class => "mceEditor" %>
+==================
 
-[view]
+& you can try this :
 
-<%= bbcoder_encode(string) %>
-<%= bbcoder_decode(string) %>
+>> x = Post.first
+>> x.bb_body #=> "[u][i]brtb[/i][/u][br]"
+>> x.body #=> "<u><em>brtb</em></u><br/>"
+>> x.bb_body = "[color=#ff0000]werwer[/color]" #=> "[color=#ff0000]werwer[/color]"
+>> x.body #=> "<span style=\"color: #ff0000\">werwer</span>"
 
-& if you using TinyMCE BBCode plugin , you can use %LIB_DIR%/support/TinyMCE/BBCode
-to change original plugin
+
+okay , have fun :P
+
+
+JokerCatz @ http://railsfun.tw/
